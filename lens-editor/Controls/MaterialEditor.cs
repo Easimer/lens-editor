@@ -110,7 +110,7 @@ namespace lens_editor
             ReadOnly = true;
             base.OnClick(e);
             var dialog = new OpenFileDialog();
-            dialog.InitialDirectory = Path.Combine(Properties.Settings.Default.GameDataPath, "data\\textures");
+            dialog.InitialDirectory = Editor.GetResourceDirectory(Editor.ResourceType.Texture);
             dialog.Multiselect = false;
             dialog.Title = "Select a texture";
             dialog.Filter = "LENS Texture Format|*.lrf|RGB Bitmap|*.bmp|All files (*.*)|*.*";
@@ -119,9 +119,7 @@ namespace lens_editor
 
             if(res == DialogResult.OK)
             {
-                var uri = new Uri(dialog.FileName);
-                var root = new Uri(Path.Combine(Properties.Settings.Default.GameDataPath, "data"));
-                Value = root.MakeRelativeUri(uri).ToString();
+                Value = Editor.ResourceShortName(dialog.FileName);
             }
         }
     }

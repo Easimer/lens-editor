@@ -90,7 +90,7 @@ namespace lens_editor.Controls
         private string ShaderDialog(FileDialog d)
         {
             d.Filter = string.Format("Shader source|{0}|All files (*.*)|*.*", GetExtension());
-            d.InitialDirectory = Path.Combine(Properties.Settings.Default.GameDataPath, "data\\shaders");
+            d.InitialDirectory = Editor.GetResourceDirectory(Editor.ResourceType.Shader);
 
             var res = d.ShowDialog();
 

@@ -17,14 +17,13 @@ namespace lens_editor
         public Editor()
         {
             InitializeComponent();
-            m_path_game_data = Properties.Settings.Default.GameDataPath;
-            if (string.IsNullOrWhiteSpace(m_path_game_data))
+            if (string.IsNullOrWhiteSpace(Properties.Settings.Default.GameDataPath))
             {
                 this.Text = string.Format("LENS Editor - (path to game data is unset)");
             }
             else
             {
-                this.Text = string.Format("LENS Editor - {0}", m_path_game_data);
+                this.Text = string.Format("LENS Editor - {0}", Properties.Settings.Default.GameDataPath);
             }
 
         }
@@ -42,7 +41,7 @@ namespace lens_editor
             var dialog = new OpenFileDialog();
             dialog.Filter = "LENS material file|*.mat";
             dialog.Multiselect = false;
-            dialog.InitialDirectory = m_path_game_data;
+            dialog.InitialDirectory = GetResourceDirectory(ResourceType.Material);
             //dialog.FileName;
             if(dialog.ShowDialog() == DialogResult.OK)
             {
@@ -97,12 +96,11 @@ namespace lens_editor
 
             if(res == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
             {
-                m_path_game_data = dialog.SelectedPath;
-                Properties.Settings.Default.GameDataPath = m_path_game_data;
+                Properties.Settings.Default.GameDataPath = dialog.SelectedPath;
                 Properties.Settings.Default.Save();
 
-                Environment.CurrentDirectory = m_path_game_data;
-                this.Text = string.Format("LENS Editor - {0}", m_path_game_data);
+                Environment.CurrentDirectory = dialog.SelectedPath;
+                this.Text = string.Format("LENS Editor - {0}", Properties.Settings.Default.GameDataPath);
             }
             dialog.Dispose();
         }
@@ -115,7 +113,7 @@ namespace lens_editor
         {
             var dialog = new SaveFileDialog();
             dialog.Filter = "LENS material file|*.mat|All files (*.*)|*.*";
-            dialog.InitialDirectory = Path.Combine(m_path_game_data, "data", "materials");
+            dialog.InitialDirectory = GetResourceDirectory(ResourceType.Material);
             if(dialog.ShowDialog() == DialogResult.OK)
             {
                 var filename = dialog.FileName;
@@ -124,13 +122,11 @@ namespace lens_editor
             }
         }
 
-        private string m_path_game_data;
-
         private void MenuCreateShader(object sender, EventArgs e)
         {
             var dialog = new SaveFileDialog();
             dialog.Filter = "LENS shader definition|*.def|All files (*.*)|*.*";
-            dialog.InitialDirectory = Path.Combine(m_path_game_data, "data", "shaders");
+            dialog.InitialDirectory = GetResourceDirectory(ResourceType.Shader);
             if(dialog.ShowDialog() == DialogResult.OK)
             {
                 var filename = dialog.FileName;
@@ -143,13 +139,30 @@ namespace lens_editor
         {
             var dialog = new OpenFileDialog();
             dialog.Filter = "LENS shader definition|*.def|All files (*.*)|*.*";
-            dialog.InitialDirectory = Path.Combine(m_path_game_data, "data", "shaders");
+            dialog.InitialDirectory = GetResourceDirectory(ResourceType.Shader);
             if(dialog.ShowDialog() == DialogResult.OK)
             {
                 var filename = dialog.FileName;
                 var shader = Shader.FromFile(filename);
                 NewShaderTab(shader, filename, false);
             }
+        }
+
+        public enum ResourceType
+        {
+            Material, Texture, Shader, Sound
+        }
+
+        public static string GetResourceDirectory(ResourceType t)
+        {
+            switch(t)
+            {
+                case ResourceType.Material: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "materials");
+                case ResourceType.Texture: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "textures");
+                case ResourceType.Shader: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "shaders");
+                case ResourceType.Sound: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "sounds");
+            }
+            return Properties.Settings.Default.GameDataPath;
         }
     }
 }

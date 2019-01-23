@@ -18,10 +18,7 @@ namespace lens_editor
             Shader ret = new Shader();
             ret.files = new Dictionary<string, string>();
 
-            ret.path = filename;
-            var uri = new Uri(filename);
-            var root = new Uri(Path.Combine(Properties.Settings.Default.GameDataPath, "data"));
-            ret.path = root.MakeRelativeUri(uri).ToString();
+            ret.path = Editor.ResourceShortName(filename);
             ret.name = Path.GetFileName(filename);
 
             LTXT f = new LTXT();
