@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="GameDataPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">E:\projects\lens-build\Debug</Value>
     </Setting>
   </Settings>
 </SettingsFile>

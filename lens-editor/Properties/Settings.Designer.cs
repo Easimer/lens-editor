@@ -25,7 +25,7 @@ namespace lens_editor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("E:\\projects\\lens-build\\Debug")]
         public string GameDataPath {
             get {
                 return ((string)(this["GameDataPath"]));

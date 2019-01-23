@@ -109,6 +109,16 @@ namespace lens_editor
         {
             ReadOnly = true;
             base.OnClick(e);
+
+            var dialog = new ResourcePickerDialog();
+            var res = dialog.ShowDialog();
+
+            if(res == DialogResult.OK)
+            {
+                Value = dialog.FileName;
+            }
+            return;
+            /*
             var dialog = new OpenFileDialog();
             dialog.InitialDirectory = Editor.GetResourceDirectory(Editor.ResourceType.Texture);
             dialog.Multiselect = false;
@@ -121,6 +131,7 @@ namespace lens_editor
             {
                 Value = Editor.ResourceShortName(dialog.FileName);
             }
+            */
         }
     }
 

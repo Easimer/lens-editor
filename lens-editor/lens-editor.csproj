@@ -46,12 +46,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ResourceDetails.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ResourceDetails.Designer.cs">
+      <DependentUpon>ResourceDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ResourceFilter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ResourceFilter.Designer.cs">
+      <DependentUpon>ResourceFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ResourceList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ResourceList.Designer.cs">
+      <DependentUpon>ResourceList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ShaderProgramStage.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ShaderProgramStage.Designer.cs">
       <DependentUpon>ShaderProgramStage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\LRFReader.cs" />
     <Compile Include="Data\Material.cs" />
     <Compile Include="Controls\MaterialEditor.cs">
       <SubType>UserControl</SubType>
@@ -70,6 +89,12 @@
     </Compile>
     <Compile Include="Controls\ResourceBuilder.Designer.cs">
       <DependentUpon>ResourceBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ResourcePickerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ResourcePickerDialog.Designer.cs">
+      <DependentUpon>ResourcePickerDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="LTXT.cs" />
     <Compile Include="Program.cs" />
@@ -90,6 +115,15 @@
     <EmbeddedResource Include="Controls\MaterialEditor.resx">
       <DependentUpon>MaterialEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResourceDetails.resx">
+      <DependentUpon>ResourceDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResourceFilter.resx">
+      <DependentUpon>ResourceFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResourceList.resx">
+      <DependentUpon>ResourceList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ShaderProgramEditor.resx">
       <DependentUpon>ShaderProgramEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ResourceBuilder.resx">
       <DependentUpon>ResourceBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ResourcePickerDialog.resx">
+      <DependentUpon>ResourcePickerDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -148,6 +185,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\stage_vertex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_material.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_model.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_music.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_shader.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_sound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_texture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\restype_shaderprogram.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
