@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.split_root = new System.Windows.Forms.SplitContainer();
-            this.split_bottom = new System.Windows.Forms.SplitContainer();
             this.resourceList1 = new lens_editor.Controls.ResourceList();
+            this.split_bottom = new System.Windows.Forms.SplitContainer();
             this.details = new lens_editor.Controls.ResourceDetails();
             this.filter_restype = new lens_editor.Controls.ResourceFilter();
             ((System.ComponentModel.ISupportInitialize)(this.split_root)).BeginInit();
@@ -61,23 +61,6 @@
             this.split_root.SplitterDistance = 285;
             this.split_root.TabIndex = 0;
             // 
-            // split_bottom
-            // 
-            this.split_bottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.split_bottom.Location = new System.Drawing.Point(0, 0);
-            this.split_bottom.Name = "split_bottom";
-            // 
-            // split_bottom.Panel1
-            // 
-            this.split_bottom.Panel1.Controls.Add(this.details);
-            // 
-            // split_bottom.Panel2
-            // 
-            this.split_bottom.Panel2.Controls.Add(this.filter_restype);
-            this.split_bottom.Size = new System.Drawing.Size(800, 161);
-            this.split_bottom.SplitterDistance = 579;
-            this.split_bottom.TabIndex = 0;
-            // 
             // resourceList1
             // 
             this.resourceList1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -86,12 +69,29 @@
             this.resourceList1.Size = new System.Drawing.Size(800, 285);
             this.resourceList1.TabIndex = 0;
             // 
+            // split_bottom
+            // 
+            this.split_bottom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.split_bottom.Location = new System.Drawing.Point(0, 0);
+            this.split_bottom.Name = "split_bottom";
+            // 
+            // split_bottom.Panel1
+            // 
+            this.split_bottom.Panel1.Controls.Add(this.filter_restype);
+            // 
+            // split_bottom.Panel2
+            // 
+            this.split_bottom.Panel2.Controls.Add(this.details);
+            this.split_bottom.Size = new System.Drawing.Size(800, 161);
+            this.split_bottom.SplitterDistance = 396;
+            this.split_bottom.TabIndex = 0;
+            // 
             // details
             // 
             this.details.Dock = System.Windows.Forms.DockStyle.Fill;
             this.details.Location = new System.Drawing.Point(0, 0);
             this.details.Name = "details";
-            this.details.Size = new System.Drawing.Size(579, 161);
+            this.details.Size = new System.Drawing.Size(400, 161);
             this.details.TabIndex = 0;
             // 
             // filter_restype
@@ -100,7 +100,7 @@
             this.filter_restype.Location = new System.Drawing.Point(0, 0);
             this.filter_restype.MinimumSize = new System.Drawing.Size(200, 140);
             this.filter_restype.Name = "filter_restype";
-            this.filter_restype.Size = new System.Drawing.Size(217, 161);
+            this.filter_restype.Size = new System.Drawing.Size(396, 161);
             this.filter_restype.TabIndex = 0;
             // 
             // ResourcePickerDialog
