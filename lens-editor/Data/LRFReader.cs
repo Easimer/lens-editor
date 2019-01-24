@@ -92,7 +92,7 @@ namespace lens_editor
             UInt32 type;
         }
 
-        class LRF3DMesh
+        public class LRF3DMesh
         {
             public string name;
             public UInt64 faces;
@@ -103,15 +103,32 @@ namespace lens_editor
             public UInt64 anims;
         }
 
-        class LRFTexture
+        public class LRFTexture
         {
             [Flags]
             public enum Flags
             {
                 DXT1 = 1
             }
-            public UInt32 width, height, components, flags, level;
+            public UInt32 width, height, components;
+            public Flags flags;
+            public UInt32 level;
             public UInt64 size;
+            public byte[] data;
+        }
+
+        public static bool LoadTexture(BinaryReader br, out LRFTexture texture)
+        {
+            texture = new LRFTexture();
+            texture.width = br.ReadUInt32();
+            texture.height = br.ReadUInt32();
+            texture.components = br.ReadUInt32();
+            texture.flags = (LRFTexture.Flags)br.ReadUInt32();
+            texture.level = br.ReadUInt32();
+            texture.size = br.ReadUInt64();
+            texture.data = br.ReadBytes((int)texture.size);
+
+            return true;
         }
 
         public static Dictionary<string, string> ExtractDetails(string path)
@@ -170,21 +187,24 @@ namespace lens_editor
                             br.BaseStream.Seek(jmp_to, SeekOrigin.Begin);
                             break;
                         case lrf_chunk_texture:
+                            LRFTexture texture;
+                            if(LoadTexture(br, out texture))
+                            {
+                                ret["Resolution"] = string.Format("{0}x{1}x{2}", texture.width, texture.height, texture.components);
+                                var flags = texture.flags;
+                                if(texture.flags.HasFlag(LRFTexture.Flags.DXT1))
+                                {
+                                    ret["Format"] = "DXT1";
+                                }
+                                else
+                                {
+                                    ret["Format"] = "RGB";
+                                }
+                                ret["Mipmap level"] = texture.level.ToString();
+                                ret["Size"] = texture.size.ToString();
+                            }
                             jmp_to = br.BaseStream.Position + (long)siz;
-                            ret["Resolution"] = string.Format("{0}x{1}x{2}", br.ReadUInt32(), br.ReadUInt32(), br.ReadUInt32());
-                            var flags = br.ReadUInt32();
-                            if((flags & (UInt32)(LRFTexture.Flags.DXT1)) != 0)
-                            {
-                                ret["Format"] = "DXT1";
-                            }
-                            else
-                            {
-                                ret["Format"] = "RGB";
-                            }
-                            ret["Mipmap level"] = br.ReadUInt32().ToString();
-                            ret["Size"] = br.ReadUInt64().ToString();
                             br.BaseStream.Seek(jmp_to, SeekOrigin.Begin);
-                            
                             break;
                     }
                 }
