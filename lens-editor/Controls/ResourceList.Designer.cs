@@ -72,6 +72,7 @@
             this.list_files.Size = new System.Drawing.Size(412, 315);
             this.list_files.TabIndex = 0;
             this.list_files.UseCompatibleStateImageBehavior = false;
+            this.list_files.SelectedIndexChanged += new System.EventHandler(this.OnResourceSelected);
             // 
             // ResourceList
             // 

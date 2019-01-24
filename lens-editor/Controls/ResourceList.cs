@@ -17,6 +17,10 @@ namespace lens_editor.Controls
         {
             Unknown = 0, Material = 1, Texture = 2, ShaderProgram = 3, Shader = 4, Sound = 5, Music = 6, Model = 7
         }
+
+        public ResourceFilter.FilterFlag filter = ResourceFilter.FilterFlag.All;
+        public string FilenameFilter = "";
+
         public ResourceList()
         {
             InitializeComponent();
@@ -72,6 +76,32 @@ namespace lens_editor.Controls
             return ResourceType.Unknown;
         }
 
+        bool FilterFile(ResourceType t, ResourceFilter.FilterFlag f)
+        {
+            switch(f)
+            {
+                case ResourceFilter.FilterFlag.All:
+                    return true;
+                case ResourceFilter.FilterFlag.Materials:
+                    return t == ResourceType.Material;
+                case ResourceFilter.FilterFlag.Models:
+                    return t == ResourceType.Model;
+                case ResourceFilter.FilterFlag.ShaderPrograms:
+                    return t == ResourceType.ShaderProgram;
+                case ResourceFilter.FilterFlag.Shaders:
+                    return t == ResourceType.Shader;
+                case ResourceFilter.FilterFlag.Textures:
+                    return t == ResourceType.Texture;
+                case ResourceFilter.FilterFlag.Misc:
+                    return t == ResourceType.Unknown;
+                case ResourceFilter.FilterFlag.Music:
+                    return t == ResourceType.Music;
+                case ResourceFilter.FilterFlag.Sound:
+                    return t == ResourceType.Sound;
+            }
+            return false;
+        }
+
         int ImageIndex(ResourceType rest)
         {
             switch (rest)
@@ -110,20 +140,67 @@ namespace lens_editor.Controls
             }
         }
 
-        private void ResetFileView()
+        public void ResetFileView()
         {
             list_files.Items.Clear();
 
             foreach(var file in Directory.EnumerateFiles(m_working_dir))
             {
+                var rest = DetermineResourceType(file);
+                if (!FilterFile(rest, filter))
+                    continue;
+                if(!string.IsNullOrEmpty(FilenameFilter) && !string.IsNullOrWhiteSpace(FilenameFilter))
+                {
+                    if(!file.Contains(FilenameFilter))
+                    {
+                        continue;
+                    }
+                }
                 var it = new ListViewItem();
                 it.Text = Path.GetFileName(file);
-                it.ImageIndex = ImageIndex(DetermineResourceType(file));
+                it.ImageIndex = ImageIndex(rest);
+                it.Tag = Editor.ResourceShortName(file);
                 list_files.Items.Add(it);
             }
         }
 
         private string m_working_dir;
+        private string m_filename;
         private ImageList m_image_list;
+
+        public string FileName { get => m_filename; }
+        public ResourceDetails details_box;
+
+        private void OnResourceSelected(object sender, EventArgs e)
+        {
+            if(list_files.SelectedIndices.Count == 0)
+            {
+                m_filename = null;
+                return;
+            }
+            m_filename = (string)list_files.Items[list_files.SelectedIndices[0]].Tag;
+            if(details_box != null)
+            {
+                details_box.PathTextBox.Text = m_filename;
+                details_box.Clear();
+                var full_path = Path.Combine(Properties.Settings.Default.GameDataPath, m_filename);
+                if (m_filename.EndsWith(".lrf"))
+                {
+                    foreach (var kv in LRFReader.ExtractDetails(full_path))
+                    {
+                        details_box.AddDetail(kv.Key, kv.Value);
+                    }
+                }
+                else if(m_filename.EndsWith(".mat"))
+                {
+                    LTXT f = new LTXT();
+                    f.ReadFromFile(full_path);
+                    if(f.Data().ContainsKey("shader"))
+                    {
+                        details_box.AddDetail("Shader", f["shader"]);
+                    }
+                }
+            }
+        }
     }
 }

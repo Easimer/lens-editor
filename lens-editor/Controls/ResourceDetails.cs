@@ -22,6 +22,20 @@ namespace lens_editor.Controls
             parent.AcceptButton = btn_ok;
         }
 
+        public void AddDetail(string property, string value)
+        {
+            var it = new ListViewItem();
+            it.Text = property;
+            it.SubItems.Add(value);
+            list_details.Items.Add(it);
+        }
+
+        public void Clear()
+        {
+            list_details.Items.Clear();
+        }
+
         public string FileName { get => field_path.Text; private set { } }
+        public TextBox PathTextBox { get => field_path; private set { } }
     }
 }

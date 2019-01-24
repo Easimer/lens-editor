@@ -70,8 +70,10 @@
             this.btn_music.Size = new System.Drawing.Size(53, 17);
             this.btn_music.TabIndex = 9;
             this.btn_music.TabStop = true;
+            this.btn_music.Tag = "Music";
             this.btn_music.Text = "Music";
             this.btn_music.UseVisualStyleBackColor = true;
+            this.btn_music.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // btn_snd
             // 
@@ -81,8 +83,10 @@
             this.btn_snd.Size = new System.Drawing.Size(56, 17);
             this.btn_snd.TabIndex = 8;
             this.btn_snd.TabStop = true;
+            this.btn_snd.Tag = "Sounds";
             this.btn_snd.Text = "Sound";
             this.btn_snd.UseVisualStyleBackColor = true;
+            this.btn_snd.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // field_filter
             // 
@@ -93,6 +97,7 @@
             this.field_filter.Size = new System.Drawing.Size(199, 20);
             this.field_filter.TabIndex = 7;
             this.field_filter.Click += new System.EventHandler(this.OnFilterClick);
+            this.field_filter.TextChanged += new System.EventHandler(this.OnFilterChanged);
             // 
             // btn_misc
             // 
@@ -102,8 +107,10 @@
             this.btn_misc.Size = new System.Drawing.Size(47, 17);
             this.btn_misc.TabIndex = 6;
             this.btn_misc.TabStop = true;
+            this.btn_misc.Tag = "Misc";
             this.btn_misc.Text = "Misc";
             this.btn_misc.UseVisualStyleBackColor = true;
+            this.btn_misc.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // btn_models
             // 
@@ -113,8 +120,10 @@
             this.btn_models.Size = new System.Drawing.Size(59, 17);
             this.btn_models.TabIndex = 5;
             this.btn_models.TabStop = true;
+            this.btn_models.Tag = "Models";
             this.btn_models.Text = "Models";
             this.btn_models.UseVisualStyleBackColor = true;
+            this.btn_models.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // btn_shaders
             // 
@@ -124,8 +133,10 @@
             this.btn_shaders.Size = new System.Drawing.Size(64, 17);
             this.btn_shaders.TabIndex = 4;
             this.btn_shaders.TabStop = true;
+            this.btn_shaders.Tag = "Shaders";
             this.btn_shaders.Text = "Shaders";
             this.btn_shaders.UseVisualStyleBackColor = true;
+            this.btn_shaders.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // btn_shader_programs
             // 
@@ -135,8 +146,10 @@
             this.btn_shader_programs.Size = new System.Drawing.Size(105, 17);
             this.btn_shader_programs.TabIndex = 3;
             this.btn_shader_programs.TabStop = true;
+            this.btn_shader_programs.Tag = "ShaderPrograms";
             this.btn_shader_programs.Text = "Shader programs";
             this.btn_shader_programs.UseVisualStyleBackColor = true;
+            this.btn_shader_programs.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // btn_textures
             // 
@@ -146,8 +159,10 @@
             this.btn_textures.Size = new System.Drawing.Size(66, 17);
             this.btn_textures.TabIndex = 2;
             this.btn_textures.TabStop = true;
+            this.btn_textures.Tag = "Textures";
             this.btn_textures.Text = "Textures";
             this.btn_textures.UseVisualStyleBackColor = true;
+            this.btn_textures.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // btn_materials
             // 
@@ -157,8 +172,10 @@
             this.btn_materials.Size = new System.Drawing.Size(67, 17);
             this.btn_materials.TabIndex = 1;
             this.btn_materials.TabStop = true;
+            this.btn_materials.Tag = "Materials";
             this.btn_materials.Text = "Materials";
             this.btn_materials.UseVisualStyleBackColor = true;
+            this.btn_materials.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // btn_all
             // 
@@ -169,8 +186,10 @@
             this.btn_all.Size = new System.Drawing.Size(36, 17);
             this.btn_all.TabIndex = 0;
             this.btn_all.TabStop = true;
+            this.btn_all.Tag = "All";
             this.btn_all.Text = "All";
             this.btn_all.UseVisualStyleBackColor = true;
+            this.btn_all.Click += new System.EventHandler(this.OnFilterSelect);
             // 
             // ResourceFilter
             // 

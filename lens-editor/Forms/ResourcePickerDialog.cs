@@ -17,6 +17,8 @@ namespace lens_editor
             InitializeComponent();
 
             details.Setup(this);
+            resourceList1.details_box = details;
+            filter_restype.ResourceList = resourceList1;
         }
 
         public string FileName
