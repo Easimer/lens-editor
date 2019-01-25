@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.split_root = new System.Windows.Forms.SplitContainer();
-            this.resourceList1 = new lens_editor.Controls.ResourceList();
+            this.resourceList1 = new lens_editor.ResourceList();
             this.split_bottom = new System.Windows.Forms.SplitContainer();
-            this.details = new lens_editor.Controls.ResourceDetails();
-            this.filter_restype = new lens_editor.Controls.ResourceFilter();
+            this.details = new ResourceDetails();
+            this.filter_restype = new lens_editor.ResourceFilter();
             ((System.ComponentModel.ISupportInitialize)(this.split_root)).BeginInit();
             this.split_root.Panel1.SuspendLayout();
             this.split_root.Panel2.SuspendLayout();
@@ -131,8 +131,8 @@
 
         private System.Windows.Forms.SplitContainer split_root;
         private System.Windows.Forms.SplitContainer split_bottom;
-        private Controls.ResourceFilter filter_restype;
-        private Controls.ResourceList resourceList1;
-        private Controls.ResourceDetails details;
+        private ResourceFilter filter_restype;
+        private ResourceList resourceList1;
+        private ResourceDetails details;
     }
 }

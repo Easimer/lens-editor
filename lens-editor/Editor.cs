@@ -38,15 +38,15 @@ namespace lens_editor
         private void MenuLoadMaterial(object sender, EventArgs e)
         {
             string filename = "";
-            var dialog = new OpenFileDialog();
-            dialog.Filter = "LENS material file|*.mat";
-            dialog.Multiselect = false;
+            var dialog = new ResourcePickerDialog();
             dialog.InitialDirectory = GetResourceDirectory(ResourceType.Material);
+            dialog.Filter = ResourceFilter.FilterFlag.Materials;
             //dialog.FileName;
-            if(dialog.ShowDialog() == DialogResult.OK)
+            if(dialog.ShowDialog() != DialogResult.OK)
             {
-                filename = dialog.FileName;
+                return;
             }
+            filename = Path.Combine(Properties.Settings.Default.GameDataPath, dialog.FileName);
             var mat = Material.ReadFromFile(filename);
             if(mat == null)
             {
@@ -70,6 +70,7 @@ namespace lens_editor
 
             tab.Controls.Add(mat_ed);
             tab_editor.TabPages.Add(tab);
+            tab_editor.SelectedIndex = tab_editor.TabPages.Count - 1;
         }
 
         private void NewShaderTab(Shader shader, string filename, bool create)
@@ -80,6 +81,7 @@ namespace lens_editor
 
             tab.Controls.Add(sh_ed);
             tab_editor.TabPages.Add(tab);
+            tab_editor.SelectedIndex = tab_editor.TabPages.Count - 1;
         }
 
         private void MenuOnExit(object sender, EventArgs e)
@@ -137,12 +139,12 @@ namespace lens_editor
 
         private void MenuLoadShader(object sender, EventArgs e)
         {
-            var dialog = new OpenFileDialog();
-            dialog.Filter = "LENS shader definition|*.def|All files (*.*)|*.*";
+            var dialog = new ResourcePickerDialog();
             dialog.InitialDirectory = GetResourceDirectory(ResourceType.Shader);
+            dialog.Filter = ResourceFilter.FilterFlag.ShaderPrograms;
             if(dialog.ShowDialog() == DialogResult.OK)
             {
-                var filename = dialog.FileName;
+                var filename = Path.Combine(Properties.Settings.Default.GameDataPath, dialog.FileName);
                 var shader = Shader.FromFile(filename);
                 NewShaderTab(shader, filename, false);
             }

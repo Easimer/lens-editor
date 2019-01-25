@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace lens_editor.Controls
+namespace lens_editor
 {
     public partial class ResourceDetails : UserControl
     {

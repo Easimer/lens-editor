@@ -29,7 +29,7 @@ namespace lens_editor
             }
         }
 
-        public Controls.ResourceFilter.FilterFlag Filter
+        public ResourceFilter.FilterFlag Filter
         {
             get
             {

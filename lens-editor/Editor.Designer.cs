@@ -83,14 +83,14 @@
             // materialToolStripMenuItem
             // 
             this.materialToolStripMenuItem.Name = "materialToolStripMenuItem";
-            this.materialToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.materialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.materialToolStripMenuItem.Text = "&Material";
             this.materialToolStripMenuItem.Click += new System.EventHandler(this.MenuCreateMaterial);
             // 
             // shaderToolStripMenuItem
             // 
             this.shaderToolStripMenuItem.Name = "shaderToolStripMenuItem";
-            this.shaderToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.shaderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.shaderToolStripMenuItem.Text = "&Shader";
             this.shaderToolStripMenuItem.Click += new System.EventHandler(this.MenuCreateShader);
             // 
@@ -101,7 +101,7 @@
             this.shaderToolStripMenuItem1});
             this.menu_load_resource.Name = "menu_load_resource";
             this.menu_load_resource.Size = new System.Drawing.Size(180, 22);
-            this.menu_load_resource.Text = "&Open resource";
+            this.menu_load_resource.Text = "&Open";
             // 
             // menu_load_material
             // 

@@ -1,4 +1,4 @@
-﻿namespace lens_editor.Controls
+﻿namespace lens_editor
 {
     partial class ResourceFilter
     {
