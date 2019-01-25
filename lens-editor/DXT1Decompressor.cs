@@ -100,7 +100,6 @@ namespace lens_editor
 
         public DXT1Decompressor(int width, int height, byte[] blob)
         {
-
             m_bitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             var data = m_bitmap.LockBits(new Rectangle(0, 0, width, height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             var ptr = data.Scan0;
@@ -108,17 +107,15 @@ namespace lens_editor
             int bytes = Math.Abs(data.Stride) * m_bitmap.Height;
             byte[] rgb_values = new byte[bytes];
 
-            for(int by = 0; by < m_bitmap.Height / 4; by++)
-            {
-                for(int bx = 0; bx < m_bitmap.Width / 4; bx++)
+            Parallel.For(0, height / 4, by =>
+                Parallel.For(0, width / 4, bx =>
                 {
                     var block = DecompressBlock(bx, by, width, blob);
-                    var block_off = by * 4 * m_bitmap.Width * 3 + bx * 4 * 3;
-                    var block_addr = by * m_bitmap.Width / 4;
-                    for(int py = 0; py < 4; py++)
+                    var block_off = by * 4 * width * 3 + bx * 4 * 3;
+                    for (int py = 0; py < 4; py++)
                     {
-                        var line_off = block_off + py * m_bitmap.Width * 3;
-                        for(int px = 0; px < 4; px++)
+                        var line_off = block_off + py * width * 3;
+                        for (int px = 0; px < 4; px++)
                         {
                             var pix_off = line_off + px * 3;
                             rgb_values[pix_off + 0] = block.pixels[py * 4 + px].R;
@@ -127,7 +124,9 @@ namespace lens_editor
                         }
                     }
                 }
-            }
+                )
+            );
+
             Marshal.Copy(rgb_values, 0, ptr, bytes);
             m_bitmap.UnlockBits(data);
         }

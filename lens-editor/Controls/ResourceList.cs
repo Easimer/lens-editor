@@ -56,6 +56,7 @@ namespace lens_editor.Controls
         ResourceType DetermineResourceType(string path)
         {
             if (path.EndsWith(".bmp")) return ResourceType.Texture;
+            if (path.EndsWith(".png")) return ResourceType.Texture;
             if (path.EndsWith(".wav")) return ResourceType.Sound;
             if (path.EndsWith(".mp3")) return ResourceType.Music;
             if (path.EndsWith(".mat")) return ResourceType.Material;
@@ -145,13 +146,22 @@ namespace lens_editor.Controls
 
         public Bitmap GeneratePreview(string path)
         {
-            if (!path.EndsWith(".lrf")) return null; // TODO: implement preview generation for BMP/PNG files
-            var tex = LRFReader.LoadTexture(path);
+            Bitmap ret = null;
+            if(path.EndsWith(".lrf"))
+            {
+                var tex = LRFReader.LoadTexture(path);
 
-            if (tex == null) return null;
+                if (tex == null) return null;
 
-            DXT1Decompressor dxt1 = new DXT1Decompressor((int)tex.width, (int)tex.height, tex.data);
-            return dxt1.Bitmap;
+                DXT1Decompressor dxt1 = new DXT1Decompressor((int)tex.width, (int)tex.height, tex.data);
+                ret = dxt1.Bitmap;
+            }
+            else if(path.EndsWith(".bmp") || path.EndsWith(".png"))
+            {
+                ret = new Bitmap(path);
+            }
+
+            return ret;
         }
 
         public void ResetFileView()
