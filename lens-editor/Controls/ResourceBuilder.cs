@@ -95,16 +95,14 @@ namespace lens_editor
 
         private void OnSourceBrowse(object sender, EventArgs e)
         {
-            var dialog = new OpenFileDialog();
-            dialog.Multiselect = false;
-            dialog.InitialDirectory = Path.Combine(Properties.Settings.Default.GameDataPath, "data");
+            var dialog = new ResourcePickerDialog();
             var res = dialog.ShowDialog();
             if(res == DialogResult.OK)
             {
-                field_src_path.Text = dialog.FileName;
-                field_dst_path.Text = Path.ChangeExtension(dialog.FileName, "lrf");
+                var full_path = Path.Combine(Properties.Settings.Default.GameDataPath, dialog.FileName);
+                field_src_path.Text = full_path;
+                field_dst_path.Text = Path.ChangeExtension(full_path, "lrf");
             }
-
         }
 
         Process m_proc;

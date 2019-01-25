@@ -196,6 +196,11 @@ namespace lens_editor.Controls
                         m_image_list.Images.Add(bm);
                         it.ImageIndex = idx;
                     }
+
+                    if(!file.EndsWith(".lrf"))
+                    {
+                        it.ForeColor = Color.Red;
+                    }
                 }
                 else
                 {
