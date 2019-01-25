@@ -28,5 +28,17 @@ namespace lens_editor
                 return details.FileName;
             }
         }
+
+        public Controls.ResourceFilter.FilterFlag Filter
+        {
+            get
+            {
+                return filter_restype.Filter;
+            }
+            set
+            {
+                filter_restype.Filter = value;
+            }
+        }
     }
 }

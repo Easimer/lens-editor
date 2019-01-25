@@ -24,6 +24,7 @@ namespace lens_editor.Controls
         public ResourceList()
         {
             InitializeComponent();
+            m_working_dir = Properties.Settings.Default.GameDataPath;
             var root = new TreeNode("[root]");
             root.Tag = ".git"; // marking invalid
 

@@ -50,14 +50,51 @@ namespace lens_editor.Controls
                 case "All": default: filter = FilterFlag.All; break;
             }
 
-            ResourceList.filter = filter;
-            ResourceList.ResetFileView();
+            if (ResourceList != null)
+            {
+                ResourceList.filter = filter;
+                ResourceList.ResetFileView();
+            }
         }
 
         private void OnFilterChanged(object sender, EventArgs e)
         {
-            ResourceList.FilenameFilter = field_filter.Text;
-            ResourceList.ResetFileView();
+            if (ResourceList != null)
+            {
+                ResourceList.FilenameFilter = field_filter.Text;
+                ResourceList.ResetFileView();
+            }
+        }
+
+        public FilterFlag Filter
+        {
+            get
+            {
+                if (ResourceList != null)
+                {
+                    return ResourceList.filter;
+                }
+                return FilterFlag.All;
+            }
+            set
+            {
+                if (ResourceList != null)
+                {
+                    ResourceList.filter = value;
+                    ResourceList.ResetFileView();
+                }
+                switch(value)
+                {
+                    case FilterFlag.All: btn_all.Checked = true; break;
+                    case FilterFlag.Textures: btn_textures.Checked = true; break;
+                    case FilterFlag.Materials: btn_materials.Checked = true; break;
+                    case FilterFlag.Models: btn_models.Checked = true; break;
+                    case FilterFlag.Sound: btn_snd.Checked = true; break;
+                    case FilterFlag.Music: btn_music.Checked = true; break;
+                    case FilterFlag.Shaders: btn_shaders.Checked = true; break;
+                    case FilterFlag.ShaderPrograms: btn_shader_programs.Checked = true; break;
+                }
+            }
         }
     }
 }

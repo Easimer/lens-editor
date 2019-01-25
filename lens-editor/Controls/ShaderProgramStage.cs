@@ -87,32 +87,30 @@ namespace lens_editor.Controls
             System.Diagnostics.Process.Start(Path.Combine(Properties.Settings.Default.GameDataPath, filename));
         }
 
-        private string ShaderDialog(FileDialog d)
-        {
-            d.Filter = string.Format("Shader source|{0}|All files (*.*)|*.*", GetExtension());
-            d.InitialDirectory = Editor.GetResourceDirectory(Editor.ResourceType.Shader);
-
-            var res = d.ShowDialog();
-
-            if(res == DialogResult.OK)
-            {
-                field_path.Text = Editor.ResourceShortName(d.FileName);
-                return d.FileName;
-            }
-            return null;
-        }
-
         private void OnCreate(object sender, EventArgs e)
         {
             var dialog = new SaveFileDialog();
-            var fn = ShaderDialog(dialog);
-            File.Create(fn).Dispose();
+            dialog.Filter = string.Format("Shader source|{0}|All files (*.*)|*.*", GetExtension());
+            dialog.InitialDirectory = Editor.GetResourceDirectory(Editor.ResourceType.Shader);
+
+            var res = dialog.ShowDialog();
+
+            if(res == DialogResult.OK)
+            {
+                field_path.Text = Editor.ResourceShortName(dialog.FileName);
+                File.Create(dialog.FileName).Dispose();
+            }
         }
 
         private void OnOpen(object sender, EventArgs e)
         {
-            var dialog = new OpenFileDialog();
-            ShaderDialog(dialog);
+            var dialog = new ResourcePickerDialog();
+            dialog.Filter = ResourceFilter.FilterFlag.Shaders;
+            var res = dialog.ShowDialog();
+            if(res == DialogResult.OK)
+            {
+                field_path.Text = dialog.FileName;
+            }
         }
 
         private void OnEdit(object sender, EventArgs e)
