@@ -33,6 +33,13 @@ namespace lens_editor.Controls
                 return;
             }
 
+            AddDirNode(root, Path.Combine(Properties.Settings.Default.GameDataPath, "data"));
+            root.ExpandAll();
+            tree_dir.Nodes.Add(root);
+        }
+
+        void ResetImageList()
+        {
             m_image_list = new ImageList();
             m_image_list.Images.Add(Properties.Resources.restype_unknown);
             m_image_list.Images.Add(Properties.Resources.restype_material);
@@ -44,10 +51,6 @@ namespace lens_editor.Controls
             m_image_list.Images.Add(Properties.Resources.restype_model);
             m_image_list.ImageSize = new Size(64, 64);
             list_files.LargeImageList = m_image_list;
-
-            AddDirNode(root, Path.Combine(Properties.Settings.Default.GameDataPath, "data"));
-            root.ExpandAll();
-            tree_dir.Nodes.Add(root);
         }
 
         ResourceType DetermineResourceType(string path)
@@ -140,9 +143,21 @@ namespace lens_editor.Controls
             }
         }
 
+        public Bitmap GeneratePreview(string path)
+        {
+            if (!path.EndsWith(".lrf")) return null; // TODO: implement preview generation for BMP/PNG files
+            var tex = LRFReader.LoadTexture(path);
+
+            if (tex == null) return null;
+
+            DXT1Decompressor dxt1 = new DXT1Decompressor((int)tex.width, (int)tex.height, tex.data);
+            return dxt1.Bitmap;
+        }
+
         public void ResetFileView()
         {
             list_files.Items.Clear();
+            ResetImageList();
 
             foreach(var file in Directory.EnumerateFiles(m_working_dir))
             {
@@ -158,7 +173,24 @@ namespace lens_editor.Controls
                 }
                 var it = new ListViewItem();
                 it.Text = Path.GetFileName(file);
-                it.ImageIndex = ImageIndex(rest);
+                if (rest == ResourceType.Texture)
+                {
+                    var bm = GeneratePreview(file);
+                    if(bm == null)
+                    {
+                        it.ImageIndex = ImageIndex(rest);
+                    }
+                    else
+                    {
+                        var idx = m_image_list.Images.Count;
+                        m_image_list.Images.Add(bm);
+                        it.ImageIndex = idx;
+                    }
+                }
+                else
+                {
+                    it.ImageIndex = ImageIndex(rest);
+                }
                 it.Tag = Editor.ResourceShortName(file);
                 list_files.Items.Add(it);
             }

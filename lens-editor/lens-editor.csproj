@@ -78,6 +78,7 @@
     <Compile Include="Controls\MaterialEditor.Designer.cs">
       <DependentUpon>MaterialEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="DXT1Decompressor.cs" />
     <Compile Include="Editor.cs">
       <SubType>Form</SubType>
     </Compile>

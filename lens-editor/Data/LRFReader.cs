@@ -87,9 +87,9 @@ namespace lens_editor
             return Type.Unknown;
         }
 
-        struct LRFHeader
+        public class LRFHeader
         {
-            UInt32 type;
+            public UInt32 type;
         }
 
         public class LRF3DMesh
@@ -131,6 +131,43 @@ namespace lens_editor
             return true;
         }
 
+        // TODO: only loads the header and skips the mesh data
+        public static bool LoadMesh(BinaryReader br, long chunk_size, out LRF3DMesh mesh)
+        {
+            mesh = new LRF3DMesh();
+            var jmp_to = br.BaseStream.Position + chunk_size;
+            mesh.name = new string(br.ReadChars(256));
+            mesh.faces = br.ReadUInt64();
+            mesh.material = new string(br.ReadChars(256));
+            mesh.bb_min = new float[3];
+            mesh.bb_max = new float[3];
+            mesh.bb_min[0] = br.ReadSingle();
+            mesh.bb_min[1] = br.ReadSingle();
+            mesh.bb_min[2] = br.ReadSingle();
+            mesh.bb_max[0] = br.ReadSingle();
+            mesh.bb_max[1] = br.ReadSingle();
+            mesh.bb_max[2] = br.ReadSingle();
+            mesh.bones = br.ReadUInt64();
+            mesh.anims = br.ReadUInt64();
+            br.BaseStream.Seek(jmp_to, SeekOrigin.Begin);
+            return true;
+        }
+
+        public static bool ReadHeader(BinaryReader br, out LRFHeader hdr)
+        {
+            hdr = new LRFHeader();
+            hdr.type = br.ReadUInt32();
+
+            return true;
+        }
+
+        public static bool IsLRFFile(BinaryReader br)
+        {
+            var magic = br.ReadUInt32(); // magic
+
+            return magic == 0x4C726620;
+        }
+
         public static Dictionary<string, string> ExtractDetails(string path)
         {
             var ret = new Dictionary<string, string>();
@@ -138,9 +175,7 @@ namespace lens_editor
             FileStream fs = File.OpenRead(path);
             using (BinaryReader br = new BinaryReader(fs))
             {
-                var magic = br.ReadUInt32(); // magic
-
-                if (magic != 0x4C726620)
+                if (!IsLRFFile(br))
                 {
                     ret["Warning"] = "Not a valid LRF file!";
                     return ret;
@@ -157,34 +192,25 @@ namespace lens_editor
                     {
                         return ret;
                     }
-                    long jmp_to = 0;
                     switch(id)
                     {
                         case lrf_chunk_header:
-                            var type = br.ReadUInt32();
-                            var stype = HeaderTypeToType(type).ToString();
-                            ret["Archive type"] = stype;
+                            LRFHeader hdr;
+                            ReadHeader(br, out hdr);
+                            ret["Archive type"] = HeaderTypeToType(hdr.type).ToString();
                             break;
                         case lrf_chunk_3d_mesh:
-                            jmp_to = br.BaseStream.Position + (long)siz;
+                            LRF3DMesh mesh;
+                            LoadMesh(br, (long)siz, out mesh);
                             mesh_count++;
-                            ret[string.Format("Mesh {0} name", mesh_count)] = new string(br.ReadChars(256));
-                            ret[string.Format("Mesh {0} face count", mesh_count)] = br.ReadUInt64().ToString();
-                            ret[string.Format("Mesh {0} material", mesh_count)] = new string(br.ReadChars(256));
-                            float[] bb_min = new float[3];
-                            float[] bb_max = new float[3];
-                            bb_min[0] = br.ReadSingle();
-                            bb_min[1] = br.ReadSingle();
-                            bb_min[2] = br.ReadSingle();
-                            bb_max[0] = br.ReadSingle();
-                            bb_max[1] = br.ReadSingle();
-                            bb_max[2] = br.ReadSingle();
+                            ret[string.Format("Mesh {0} name", mesh_count)] = mesh.name;
+                            ret[string.Format("Mesh {0} face count", mesh_count)] = mesh.faces.ToString();
+                            ret[string.Format("Mesh {0} material", mesh_count)] = mesh.material;
                             ret[string.Format("Mesh {0} bounding box", mesh_count)] =
                                 string.Format("({0}, {1}, {2}), ({3}, {4}, {5})",
-                                bb_min[0], bb_min[1], bb_min[2], bb_max[0], bb_max[1], bb_max[2]);
-                            ret[string.Format("Mesh {0} bone count", mesh_count)] = br.ReadUInt64().ToString();
-                            ret[string.Format("Mesh {0} animation count", mesh_count)] = br.ReadUInt64().ToString();
-                            br.BaseStream.Seek(jmp_to, SeekOrigin.Begin);
+                                mesh.bb_min[0], mesh.bb_min[1], mesh.bb_min[2], mesh.bb_max[0], mesh.bb_max[1], mesh.bb_max[2]);
+                            ret[string.Format("Mesh {0} bone count", mesh_count)] = mesh.bones.ToString();
+                            ret[string.Format("Mesh {0} animation count", mesh_count)] = mesh.anims.ToString();
                             break;
                         case lrf_chunk_texture:
                             LRFTexture texture;
@@ -203,14 +229,56 @@ namespace lens_editor
                                 ret["Mipmap level"] = texture.level.ToString();
                                 ret["Size"] = texture.size.ToString();
                             }
-                            jmp_to = br.BaseStream.Position + (long)siz;
-                            br.BaseStream.Seek(jmp_to, SeekOrigin.Begin);
                             break;
                     }
                 }
             }
+        }
+        
+        public static LRFTexture LoadTexture(string path)
+        {
+            LRFTexture ret = null;
+            FileStream fs = File.OpenRead(path);
+            using (BinaryReader br = new BinaryReader(fs))
+            {
+                if (!IsLRFFile(br))
+                {
+                    return ret;
+                }
 
+                string id;
+                UInt64 siz;
+
+                while (true)
+                {
+                    if (!ReadChunkHeader(br, out id, out siz))
+                    {
+                        break;
+                    }
+                    switch(id)
+                    {
+                        case lrf_chunk_header:
+                            LRFHeader hdr;
+                            ReadHeader(br, out hdr);
+                            if(HeaderTypeToType(hdr.type) != Type.Texture)
+                            {
+                                ret = null;
+                                break;
+                            }
+                            break;
+                        case lrf_chunk_texture:
+                            LRFTexture texture;
+                            if(LoadTexture(br, out texture))
+                            {
+                                ret = texture;
+                                break;
+                            }
+                            break;
+                    }
+                }
+            }
             return ret;
         }
+
     }
 }
