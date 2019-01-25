@@ -40,5 +40,11 @@ namespace lens_editor
                 filter_restype.Filter = value;
             }
         }
+
+        public string InitialDirectory
+        {
+            get => resourceList1.WorkingDirectory;
+            set => resourceList1.WorkingDirectory = value;
+        }
     }
 }

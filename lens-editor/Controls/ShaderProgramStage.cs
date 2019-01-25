@@ -105,6 +105,7 @@ namespace lens_editor.Controls
         private void OnOpen(object sender, EventArgs e)
         {
             var dialog = new ResourcePickerDialog();
+            dialog.InitialDirectory = Editor.GetResourceDirectory(Editor.ResourceType.Shader);
             dialog.Filter = ResourceFilter.FilterFlag.Shaders;
             var res = dialog.ShowDialog();
             if(res == DialogResult.OK)

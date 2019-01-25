@@ -219,6 +219,8 @@ namespace lens_editor.Controls
         public string FileName { get => m_filename; }
         public ResourceDetails details_box;
 
+        public string WorkingDirectory { get => m_working_dir; set => m_working_dir = value; }
+
         private void OnResourceSelected(object sender, EventArgs e)
         {
             if(list_files.SelectedIndices.Count == 0)
