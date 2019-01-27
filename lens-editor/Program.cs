@@ -14,8 +14,6 @@ namespace lens_editor
         [STAThread]
         static void Main()
         {
-            RemoteDebugClient rdbg = new RemoteDebugClient();
-            rdbg.Ping();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Editor());

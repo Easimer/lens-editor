@@ -48,5 +48,22 @@ namespace lens_editor
         }
 
         RemoteDebugClient m_client;
+
+        private void OnRefreshEntities(object sender, EventArgs e)
+        {
+            if(m_client != null)
+            {
+                var entities = m_client.RequestEntityList();
+                if(entities == null)
+                {
+                    return;
+                }
+                ent_container.Controls.Clear();
+                foreach(var ent in entities)
+                {
+                    ent_container.Controls.Add(new GameEntity(ent));
+                }
+            }
+        }
     }
 }
