@@ -233,5 +233,8 @@
   <ItemGroup>
     <None Include="Images\restype_shaderprogram.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ent_sync.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

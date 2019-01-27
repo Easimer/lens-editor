@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LocalGameWindow));
             this.menu = new System.Windows.Forms.ToolStrip();
             this.btn_refresh_ent_list = new System.Windows.Forms.ToolStripButton();
             this.split_root = new System.Windows.Forms.SplitContainer();
@@ -41,18 +40,19 @@
             // 
             // menu
             // 
+            this.menu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btn_refresh_ent_list});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(500, 25);
             this.menu.TabIndex = 0;
-            this.menu.Text = "toolStrip1";
+            this.menu.Text = "menu";
             // 
             // btn_refresh_ent_list
             // 
             this.btn_refresh_ent_list.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_refresh_ent_list.Image = ((System.Drawing.Image)(resources.GetObject("btn_refresh_ent_list.Image")));
+            this.btn_refresh_ent_list.Image = global::lens_editor.Properties.Resources.ent_sync;
             this.btn_refresh_ent_list.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btn_refresh_ent_list.Name = "btn_refresh_ent_list";
             this.btn_refresh_ent_list.Size = new System.Drawing.Size(23, 22);

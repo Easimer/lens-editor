@@ -82,6 +82,16 @@ namespace lens_editor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ent_sync {
+            get {
+                object obj = ResourceManager.GetObject("ent_sync", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap restype_material {
             get {
                 object obj = ResourceManager.GetObject("restype_material", resourceCulture);
