@@ -107,10 +107,6 @@ namespace lens_editor
             dialog.Dispose();
         }
 
-        private void BuildModel(string source)
-        {
-        }
-
         private void MenuCreateMaterial(object sender, EventArgs e)
         {
             var dialog = new SaveFileDialog();
@@ -165,6 +161,11 @@ namespace lens_editor
                 case ResourceType.Sound: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "sounds");
             }
             return Properties.Settings.Default.GameDataPath;
+        }
+
+        private void OnConnectToLocalGame(object sender, EventArgs e)
+        {
+            new LocalGameWindow().Show();
         }
     }
 }

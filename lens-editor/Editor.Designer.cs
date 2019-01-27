@@ -44,6 +44,8 @@
             this.tab_editor = new System.Windows.Forms.TabControl();
             this.tab_resbuild = new System.Windows.Forms.TabPage();
             this.modelBuilder1 = new lens_editor.ResourceBuilder();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectToLocalGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.tab_editor.SuspendLayout();
             this.tab_resbuild.SuspendLayout();
@@ -53,7 +55,8 @@
             // 
             this.menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.toolsToolStripMenuItem});
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Size = new System.Drawing.Size(408, 24);
@@ -77,20 +80,20 @@
             this.materialToolStripMenuItem,
             this.shaderToolStripMenuItem});
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.newToolStripMenuItem.Text = "&New";
             // 
             // materialToolStripMenuItem
             // 
             this.materialToolStripMenuItem.Name = "materialToolStripMenuItem";
-            this.materialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.materialToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.materialToolStripMenuItem.Text = "&Material";
             this.materialToolStripMenuItem.Click += new System.EventHandler(this.MenuCreateMaterial);
             // 
             // shaderToolStripMenuItem
             // 
             this.shaderToolStripMenuItem.Name = "shaderToolStripMenuItem";
-            this.shaderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.shaderToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.shaderToolStripMenuItem.Text = "&Shader";
             this.shaderToolStripMenuItem.Click += new System.EventHandler(this.MenuCreateShader);
             // 
@@ -100,33 +103,33 @@
             this.menu_load_material,
             this.shaderToolStripMenuItem1});
             this.menu_load_resource.Name = "menu_load_resource";
-            this.menu_load_resource.Size = new System.Drawing.Size(180, 22);
+            this.menu_load_resource.Size = new System.Drawing.Size(133, 22);
             this.menu_load_resource.Text = "&Open";
             // 
             // menu_load_material
             // 
             this.menu_load_material.Name = "menu_load_material";
-            this.menu_load_material.Size = new System.Drawing.Size(180, 22);
+            this.menu_load_material.Size = new System.Drawing.Size(117, 22);
             this.menu_load_material.Text = "&Material";
             this.menu_load_material.Click += new System.EventHandler(this.MenuLoadMaterial);
             // 
             // shaderToolStripMenuItem1
             // 
             this.shaderToolStripMenuItem1.Name = "shaderToolStripMenuItem1";
-            this.shaderToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.shaderToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
             this.shaderToolStripMenuItem1.Text = "&Shader";
             this.shaderToolStripMenuItem1.Click += new System.EventHandler(this.MenuLoadShader);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
             // 
             // menu_exit
             // 
             this.menu_exit.Name = "menu_exit";
             this.menu_exit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.menu_exit.Size = new System.Drawing.Size(180, 22);
+            this.menu_exit.Size = new System.Drawing.Size(133, 22);
             this.menu_exit.Text = "E&xit";
             this.menu_exit.Click += new System.EventHandler(this.MenuOnExit);
             // 
@@ -174,6 +177,21 @@
             this.modelBuilder1.Size = new System.Drawing.Size(394, 381);
             this.modelBuilder1.TabIndex = 0;
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToLocalGameToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // connectToLocalGameToolStripMenuItem
+            // 
+            this.connectToLocalGameToolStripMenuItem.Name = "connectToLocalGameToolStripMenuItem";
+            this.connectToLocalGameToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.connectToLocalGameToolStripMenuItem.Text = "Connect to local game";
+            this.connectToLocalGameToolStripMenuItem.Click += new System.EventHandler(this.OnConnectToLocalGame);
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -212,5 +230,7 @@
         private ResourceBuilder modelBuilder1;
         private System.Windows.Forms.ToolStripMenuItem shaderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shaderToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectToLocalGameToolStripMenuItem;
     }
 }
