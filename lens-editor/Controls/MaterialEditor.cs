@@ -34,9 +34,11 @@ namespace lens_editor
             {
                 if (!row.IsNewRow)
                 {
-                    var k = row.Cells[0].Value.ToString();
-                    var v = row.Cells[1].Value.ToString();
-                    m_material.AddField(k, v);
+                    var k = row.Cells[0].Value;
+                    var v = row.Cells[1].Value;
+                    k = k.ToString() ?? "editor_error";
+                    v = v.ToString() ?? "editor_error";
+                    m_material.AddField((string)k, (string)v);
                 }
             }
 
