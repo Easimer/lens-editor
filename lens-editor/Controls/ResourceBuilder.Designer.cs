@@ -100,16 +100,15 @@
             this.field_stdout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.field_stdout.Enabled = false;
+            this.field_stdout.Enabled = true;
             this.field_stdout.Location = new System.Drawing.Point(4, 91);
             this.field_stdout.Multiline = true;
             this.field_stdout.Name = "field_stdout";
-            this.field_stdout.ReadOnly = true;
             this.field_stdout.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.field_stdout.Size = new System.Drawing.Size(241, 138);
             this.field_stdout.TabIndex = 7;
             // 
-            // ModelBuilder
+            // ResourceBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -120,7 +119,7 @@
             this.Controls.Add(this.btn_src_browse);
             this.Controls.Add(this.field_src_path);
             this.Controls.Add(this.label_source);
-            this.Name = "ModelBuilder";
+            this.Name = "ResourceBuilder";
             this.Size = new System.Drawing.Size(248, 261);
             this.ResumeLayout(false);
             this.PerformLayout();

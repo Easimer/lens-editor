@@ -11,7 +11,7 @@ namespace lens_editor
     {
         public void AddField(string key, string value)
         {
-            m_fields.Add(key, value);
+            m_fields[key] = value;
         }
 
         public void WriteToFile(string filename)
