@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Text;
 
 namespace lens_editor
 {
@@ -22,6 +23,7 @@ namespace lens_editor
         {
             Ping = 0,
             EntityList = 1,
+            CreateEntity = 2,
         }
 
         enum RequestSubType
@@ -74,14 +76,38 @@ namespace lens_editor
                 IgnoredInRoomTest = 1 << 4,
                 Looping = 1 << 5,
             }
+
+            public Entity() {
+                classname = "DEADCAFE";
+                status = Status.Invalid;
+            }
+
             public Entity(BinaryReader br)
             {
                 id = br.ReadUInt64();
                 rev = br.ReadUInt64();
-                classname = new string(br.ReadChars(64));
+                var buf_classname = br.ReadBytes(64);
+                classname = new string(Encoding.ASCII.GetChars(buf_classname));
                 position = new float[] { br.ReadSingle(), br.ReadSingle(), br.ReadSingle() };
                 quaternion = new float[] { br.ReadSingle(), br.ReadSingle(), br.ReadSingle(), br.ReadSingle()};
                 status = (Status)br.ReadUInt32();
+            }
+
+            public void Write(BinaryWriter bw)
+            {
+                bw.Write(id);
+                bw.Write(rev);
+                char[] buf_classname = new char[64];
+                classname.CopyTo(0, buf_classname, 0, classname.Length < 63 ? classname.Length : 63);
+                bw.Write(buf_classname, 0, 64);
+                bw.Write(position[0]);
+                bw.Write(position[1]);
+                bw.Write(position[2]);
+                bw.Write(quaternion[0]);
+                bw.Write(quaternion[1]);
+                bw.Write(quaternion[2]);
+                bw.Write(quaternion[3]);
+                bw.Write((UInt32)status);
             }
 
             public UInt64 id, rev;
@@ -187,6 +213,41 @@ namespace lens_editor
                     }
                 }
             }
+        }
+
+        public bool CreateEntity(string classname, float[] pos, float[] quaternion)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using (var bw = new BinaryWriter(ms))
+                {
+                    WriteRequestHeader(bw, RequestType.CreateEntity, RequestSubType.None);
+                    bw.Flush();
+                    Entity ent = new Entity();
+                    ent.classname = classname;
+                    ent.position = pos;
+                    ent.quaternion = quaternion;
+
+                    var buf = ms.GetBuffer();
+                    m_client.Send(buf, buf.Length);
+                }
+            }
+            var recv_buf = ReceiveWithTimeout(500);
+            if(recv_buf != null)
+            {
+                using (var ms = new MemoryStream(recv_buf))
+                {
+                    using (var br = new BinaryReader(ms))
+                    {
+                        var res = new BaseResponse(br);
+                        if(res.Valid)
+                        {
+                            return res.Status == StatusCode.Ok;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
 
