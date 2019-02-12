@@ -227,6 +227,8 @@ namespace lens_editor
                     ent.classname = classname;
                     ent.position = pos;
                     ent.quaternion = quaternion;
+                    ent.status = Entity.Status.Alive;
+                    ent.Write(bw);
 
                     var buf = ms.GetBuffer();
                     m_client.Send(buf, buf.Length);

@@ -44,6 +44,8 @@ namespace lens_editor
             Size = MinimumSize = MaximumSize = new System.Drawing.Size((N+0) * 70, 24);
         }
 
+        // TODO: rw
+
         float[] m_values;
         int m_n;
 

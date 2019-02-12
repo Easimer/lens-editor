@@ -65,5 +65,11 @@ namespace lens_editor
                 }
             }
         }
+
+        private void OnCreateEntity(object sender, EventArgs e)
+        {
+            var dialog = new CreateEntityDialog(m_client);
+            dialog.Show();
+        }
     }
 }

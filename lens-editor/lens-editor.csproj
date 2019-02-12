@@ -100,6 +100,12 @@
     <Compile Include="Controls\ResourceBuilder.Designer.cs">
       <DependentUpon>ResourceBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CreateEntityDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateEntityDialog.Designer.cs">
+      <DependentUpon>CreateEntityDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LocalGameWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ResourceBuilder.resx">
       <DependentUpon>ResourceBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateEntityDialog.resx">
+      <DependentUpon>CreateEntityDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LocalGameWindow.resx">
       <DependentUpon>LocalGameWindow.cs</DependentUpon>
