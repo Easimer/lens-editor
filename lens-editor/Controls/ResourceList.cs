@@ -15,7 +15,7 @@ namespace lens_editor
     {
         enum ResourceType
         {
-            Unknown = 0, Material = 1, Texture = 2, ShaderProgram = 3, Shader = 4, Sound = 5, Music = 6, Model = 7
+            Unknown = 0, Material = 1, Texture = 2, ShaderProgram = 3, Shader = 4, Sound = 5, Music = 6, Model = 7, Level = 8
         }
 
         public ResourceFilter.FilterFlag filter = ResourceFilter.FilterFlag.All;
@@ -65,6 +65,7 @@ namespace lens_editor
             if (path.EndsWith(".src.geom")) return ResourceType.Shader;
             if (path.EndsWith(".src.frag")) return ResourceType.Shader;
             if (path.EndsWith(".def")) return ResourceType.ShaderProgram;
+            if (path.EndsWith(".lmf")) return ResourceType.Level;
             if (path.EndsWith(".obj")) return ResourceType.Model;
             if (path.EndsWith(".fbx")) return ResourceType.Model;
             if (path.EndsWith(".lrf"))
@@ -98,7 +99,7 @@ namespace lens_editor
                 case ResourceFilter.FilterFlag.Textures:
                     return t == ResourceType.Texture;
                 case ResourceFilter.FilterFlag.Misc:
-                    return t == ResourceType.Unknown;
+                    return t == ResourceType.Unknown || t == ResourceType.Level;
                 case ResourceFilter.FilterFlag.Music:
                     return t == ResourceType.Music;
                 case ResourceFilter.FilterFlag.Sound:

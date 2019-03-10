@@ -62,26 +62,6 @@
             this.btn_accept.UseVisualStyleBackColor = true;
             this.btn_accept.Click += new System.EventHandler(this.OnAccept);
             // 
-            // ent_desc
-            // 
-            this.ent_desc.Classname = "[classname]";
-            this.ent_desc.ID = 0;
-            this.ent_desc.Location = new System.Drawing.Point(12, 38);
-            this.ent_desc.Name = "ent_desc";
-            this.ent_desc.Position = new float[] {
-        0F,
-        0F,
-        0F};
-            this.ent_desc.Revision = 0;
-            this.ent_desc.Rotation = new float[] {
-        0F,
-        0F,
-        0F,
-        0F};
-            this.ent_desc.Size = new System.Drawing.Size(388, 134);
-            this.ent_desc.Status = lens_editor.RemoteDebugClient.Entity.Status.Invalid;
-            this.ent_desc.TabIndex = 1;
-            // 
             // CreateEntityDialog
             // 
             this.AcceptButton = this.btn_accept;

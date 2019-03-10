@@ -22,12 +22,11 @@ namespace lens_editor
         private void OnSetClassname(object sender, EventArgs e)
         {
             var cls = field_classname.Text;
-            ent_desc.Classname = cls;
         }
 
         private void OnAccept(object sender, EventArgs e)
         {
-            m_client.CreateEntity(ent_desc.Classname, ent_desc.Position, ent_desc.Rotation);
+            //m_client.CreateEntity(ent_desc.Classname, ent_desc.Position, ent_desc.Rotation);
         }
 
         public GameEntity Entity

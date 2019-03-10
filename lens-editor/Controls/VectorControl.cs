@@ -11,6 +11,7 @@ namespace lens_editor
     {
         public VectorControl()
         {
+            m_fields = new TextBox[N];
             RecreateFields(N);
         }
 
@@ -19,9 +20,10 @@ namespace lens_editor
             if (new_values == null) return;
 
             m_values = new_values;
-            foreach(TextBox tb in Controls)
+
+            for(int i = 0; i < N; i++)
             {
-                tb.Text = m_values[(int)tb.Tag].ToString();
+                m_fields[i].Text = m_values[i].ToString();
             }
         }
 
@@ -29,27 +31,44 @@ namespace lens_editor
         {
             m_n = N;
             Controls.Clear();
+            m_fields = new TextBox[N];
             m_values = new float[N];
 
             for(int i = 0; i < N; i++)
             {
-                TextBox tb = new TextBox();
-                tb.Size = new System.Drawing.Size(64, 20);
-                tb.Location = new System.Drawing.Point(i * 70, 2);
-                tb.Text = Values[i].ToString();
-                tb.Tag = i;
-                Controls.Add(tb);
+                m_fields[i] = new TextBox();
+                m_fields[i].Size = new System.Drawing.Size(64, 20);
+                m_fields[i].Location = new System.Drawing.Point(i * 70, 2);
+                m_fields[i].Text = m_values[i].ToString();
+                m_fields[i].Tag = i;
+                Controls.Add(m_fields[i]);
             }
 
             Size = MinimumSize = MaximumSize = new System.Drawing.Size((N+0) * 70, 24);
         }
 
-        // TODO: rw
+        float[] GetValues()
+        {
+            for(int i = 0; i < N; i++)
+            {
+                float nv;
+                if(float.TryParse(m_fields[i].Text, out nv))
+                {
+                    m_values[i] = nv;
+                }
+                else
+                {
+                    m_fields[i].Text = "NaN";
+                }
+            }
+            return m_values;
+        }
 
         float[] m_values;
+        TextBox[] m_fields;
         int m_n;
 
         public int N { get => m_n; set => RecreateFields(value); }
-        public float[] Values { get => m_values; set => UpdateValues(value); }
+        public float[] Values { get => GetValues(); set => UpdateValues(value); }
     }
 }

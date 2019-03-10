@@ -52,6 +52,12 @@
     <Compile Include="Controls\GameEntity.Designer.cs">
       <DependentUpon>GameEntity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LevelEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LevelEditor.Designer.cs">
+      <DependentUpon>LevelEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ResourceDetails.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -79,6 +85,7 @@
     <Compile Include="Controls\VectorControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Data\LMFReader.cs" />
     <Compile Include="Data\LRFReader.cs" />
     <Compile Include="Data\Material.cs" />
     <Compile Include="Controls\MaterialEditor.cs">
@@ -137,6 +144,9 @@
     <Compile Include="RemoteDebugClient.cs" />
     <EmbeddedResource Include="Controls\GameEntity.resx">
       <DependentUpon>GameEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LevelEditor.resx">
+      <DependentUpon>LevelEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MaterialEditor.resx">
       <DependentUpon>MaterialEditor.cs</DependentUpon>

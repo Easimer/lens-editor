@@ -84,6 +84,17 @@ namespace lens_editor
             tab_editor.SelectedIndex = tab_editor.TabPages.Count - 1;
         }
 
+        private void NewLevelTab(string filename, bool create)
+        {
+            var tab = new TabPage(ResourceShortName(filename));
+            var sh_ed = new LevelEditor(filename, create);
+            sh_ed.Dock = DockStyle.Fill;
+
+            tab.Controls.Add(sh_ed);
+            tab_editor.TabPages.Add(tab);
+            tab_editor.SelectedIndex = tab_editor.TabPages.Count - 1;
+        }
+
         private void MenuOnExit(object sender, EventArgs e)
         {
             Close();
@@ -148,7 +159,7 @@ namespace lens_editor
 
         public enum ResourceType
         {
-            Material, Texture, Shader, Sound
+            Material, Texture, Shader, Sound, Level
         }
 
         public static string GetResourceDirectory(ResourceType t)
@@ -159,6 +170,7 @@ namespace lens_editor
                 case ResourceType.Texture: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "textures");
                 case ResourceType.Shader: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "shaders");
                 case ResourceType.Sound: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "sounds");
+                case ResourceType.Level: return Path.Combine(Properties.Settings.Default.GameDataPath, "data", "maps");
             }
             return Properties.Settings.Default.GameDataPath;
         }
@@ -166,6 +178,21 @@ namespace lens_editor
         private void OnConnectToLocalGame(object sender, EventArgs e)
         {
             new LocalGameWindow().Show();
+        }
+
+        private void MenuLoadLevel(object sender, EventArgs e)
+        {
+            var dialog = new ResourcePickerDialog();
+            dialog.InitialDirectory = GetResourceDirectory(ResourceType.Level);
+            dialog.Filter = ResourceFilter.FilterFlag.Misc;
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                var filename = Path.Combine(Properties.Settings.Default.GameDataPath, dialog.FileName);
+                if(filename.EndsWith(".lmf"))
+                {
+                    NewLevelTab(filename, false);
+                }
+            }
         }
     }
 }
