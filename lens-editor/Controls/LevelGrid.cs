@@ -12,6 +12,28 @@ namespace lens_editor.Controls
 {
     public partial class LevelGrid : UserControl
     {
+        private struct Rectangle
+        {
+            public Rectangle(int x, int y, int w, int h)
+            {
+                this.x = x; this.y = y;
+                this.w = w; this.h = h;
+            }
+
+            public bool Contains(Point p)
+            {
+                if(!(p.X >= x && p.X <= x + w))
+                {
+                    return false;
+                }
+                if(!(p.Y >= y && p.Y <= y + h))
+                {
+                    return false;
+                }
+                return true;
+            }
+            int x, y, w, h;
+        }
         private Pen m_pen_grid_bg;
         private Pen m_pen_grid_fg;
         private Pen m_pen_grid_center;
@@ -117,7 +139,7 @@ namespace lens_editor.Controls
             for(int y = 0; y < ev.ClipRectangle.Bottom - ev.ClipRectangle.Top; y += (int)grid_step)
             {
                 Pen p = m_pen_grid_fg;
-                if(y + (int)camera_y == 0)
+                if(y - (int)camera_y == 0)
                 {
                     p = m_pen_grid_center;
                 }
@@ -127,7 +149,7 @@ namespace lens_editor.Controls
             for(int x = 0; x < ev.ClipRectangle.Right - ev.ClipRectangle.Left; x += (int)grid_step)
             {
                 Pen p = m_pen_grid_fg;
-                if(x + (int)camera_x == 0)
+                if(x - (int)camera_x == 0)
                 {
                     p = m_pen_grid_center;
                 }
@@ -163,7 +185,7 @@ namespace lens_editor.Controls
                             y += camera_y;
                             x += form_rel_loc.X;
                             y += form_rel_loc.Y;
-                            var entrect = new Rectangle((int)x, (int)y, 16, 16);
+                            var entrect = new System.Drawing.Rectangle((int)x, (int)y, 16, 16);
                             g.DrawRectangle(m_pen_grid_ent, entrect);
                             //g.DrawString(ent.classname, font, m_pen_grid_ent.Brush, (int)position[0] + 16, (int)position[1]);
                             g.DrawString(ent.classname, font, m_pen_grid_ent.Brush, x, y);
