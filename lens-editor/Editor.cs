@@ -95,6 +95,17 @@ namespace lens_editor
             tab_editor.SelectedIndex = tab_editor.TabPages.Count - 1;
         }
 
+        private void NewCasaTab(string filename, bool create)
+        {
+            var tab = new TabPage(ResourceShortName(filename));
+            var sh_ed = new CasaViewer(filename);
+            sh_ed.Dock = DockStyle.Fill;
+
+            tab.Controls.Add(sh_ed);
+            tab_editor.TabPages.Add(tab);
+            tab_editor.SelectedIndex = tab_editor.TabPages.Count - 1;
+        }
+
         private void MenuOnExit(object sender, EventArgs e)
         {
             Close();
@@ -198,6 +209,19 @@ namespace lens_editor
         private void OnNewLevel(object sender, EventArgs e)
         {
             new LevelEditorDialog().Show();
+        }
+
+        private void MenuLoadCasa(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.InitialDirectory = Properties.Settings.Default.GameDataPath;
+            dialog.Filter = "Casablanca Archive Directory|*.dir|All files (*.*)|*.*";
+            if(dialog.ShowDialog() == DialogResult.OK)
+            {
+                var filename = Path.Combine(Properties.Settings.Default.GameDataPath, dialog.FileName);
+                filename = Path.ChangeExtension(filename, null);
+                NewCasaTab(filename, false);
+            }
         }
     }
 }

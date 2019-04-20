@@ -46,6 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CasablancaArchive.cs" />
+    <Compile Include="Controls\CasaViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CasaViewer.Designer.cs">
+      <DependentUpon>CasaViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GameEntity.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -154,6 +161,9 @@
       <DependentUpon>ShaderProgramEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="RemoteDebugClient.cs" />
+    <EmbeddedResource Include="Controls\CasaViewer.resx">
+      <DependentUpon>CasaViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\GameEntity.resx">
       <DependentUpon>GameEntity.cs</DependentUpon>
     </EmbeddedResource>
