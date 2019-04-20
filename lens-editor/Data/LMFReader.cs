@@ -10,7 +10,7 @@ namespace lens_editor
     public class Keyvalue
     {
         public Keyvalue() { }
-        public Keyvalue(string n, object v) { name = n; value = n; }
+        public Keyvalue(string n, object v) { name = n; value = v; }
         public string name;
         public object value;
     }

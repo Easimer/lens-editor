@@ -194,5 +194,10 @@ namespace lens_editor
                 }
             }
         }
+
+        private void OnNewLevel(object sender, EventArgs e)
+        {
+            new LevelEditorDialog().Show();
+        }
     }
 }
